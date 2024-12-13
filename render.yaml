@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: todo-api
+    env: php
+    buildCommand: "./render-build.sh"
+    startCommand: "php artisan serve --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://todo-api.onrender.com
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: todo_db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: todo_db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: todo_db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: todo_db
+          property: username
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: todo_db
+          property: password
+
+databases:
+  - name: todo_db
+    databaseName: todo_db
+    user: todo_db_user
